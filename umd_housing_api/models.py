@@ -15,5 +15,5 @@ class UMDHousingListing(Base):
     
     # Store dynamic nested data seamlessly for Flutter / AI consumption
     floor_plan_summary = Column(JSON)
-    contact = Column(JSON)
+    phone_number = Column(String)
     image_url = Column(String)

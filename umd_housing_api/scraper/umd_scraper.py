@@ -52,8 +52,7 @@ class UMDHousingScraper:
                 
                 for item in raw_listings:
                     geography = item.get("geography", {})
-                    campus_dist = geography.get("campusDistance", {})
-                    address = geography.get("address", {})
+                    target_college = geography.get("targetCollege", {})
                     
                     media_items = item.get("media")
                     primary_image = None
@@ -73,14 +72,14 @@ class UMDHousingScraper:
                     parsed_item = {
                         "property_id": int(property_id),
                         "name": item.get("name"),
-                        "address": address.get("primary", ""),
-                        "city": address.get("city", "College Park"),
-                        "state": address.get("state", "MD"),
-                        "zip_code": address.get("zip", ""),
-                        "distance_miles": campus_dist.get("miles", 0),
+                        "address": geography.get("streetAddress", ""),
+                        "city": geography.get("cityName", "College Park"),
+                        "state": geography.get("stateCode", "MD"),
+                        "zip_code": geography.get("zipCode", ""),
+                        "distance_miles": target_college.get("distance", 0.0),
                         "price_summary": price_string,
                         "floor_plan_summary": item.get("floorPlanSummary", {}),
-                        "contact": item.get("leads", {}),
+                        "phone_number": item.get("leads", {}).get("phone", {}).get("formatted", ""),
                         "image_url": primary_image
                     }
                     all_processed_listings.append(parsed_item)
